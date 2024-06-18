@@ -13,22 +13,23 @@ public static class ServiceExtensions
         services.AddDbAppContext(configuration);
         services.AddRepositories();
     }
-    private static void AddRepositories(this IServiceCollection services)
+    public static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IProductRepository, ProductRepository>();
 
     }
-    private static void AddDbAppContext(this IServiceCollection services, IConfiguration configuration)
+    public static void AddDbAppContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             var databaseMySqlOptions = configuration
                                         .GetSection(MySQLOptions.GetSectionName())
                                         .Get<MySQLOptions>();
-
+ 
             options.UseMySQL(databaseMySqlOptions.ConnectionString, dbOptions =>
             {
-                dbOptions.EnableRetryOnFailure(databaseMySqlOptions.EnableRetryOnFailure);
+                dbOptions.EnableRetryOnFailure(databaseMySqlOptions.EnableRetryOnFailure);               
+                dbOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
             });
 
             options.EnableSensitiveDataLogging();

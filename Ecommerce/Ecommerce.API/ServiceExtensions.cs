@@ -9,6 +9,10 @@ public static class ServiceExtensions
 {
     public static void AddApplicationServices(this IServiceCollection services)
     {
+        services.AddSingleton<IValidator<Product>, ProductValidator>();
+
+        services.AddScoped<ProductService>();
+
         services.AddScoped<IProductService>(provider =>
         {
             var baseService = provider.GetRequiredService<ProductService>();

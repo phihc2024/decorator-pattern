@@ -1,6 +1,9 @@
-﻿namespace Ecommerce.Domain.Products;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Ecommerce.Domain.Products;
 public class Product
 {
+    [Key]
     public int ProductId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }

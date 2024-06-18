@@ -1,6 +1,7 @@
 ﻿using Ecommerce.API.Application.Products;
 using Ecommerce.Domain.Products;
 using FluentValidation;
+using ValidationException = Ecommerce.API.Application.Exceptions.ValidationException;
 
 namespace Ecommerce.API.Application.Behaviors.Products;
 
@@ -10,16 +11,13 @@ public class ProductValidator : AbstractValidator<Product>
     {
         RuleFor(p => p.Name)
             .NotNull()
-            .NotEmpty()
-            .WithMessage("ProductName is required.");
+            .NotEmpty();
 
         RuleFor(p => p.Price)
-            .NotNull()
-            .WithMessage("Price is required.");
+            .NotNull();
 
         RuleFor(p => p.StockQuantity)
-            .NotNull()
-            .WithMessage("StockQuantity is required.");
+            .NotNull();
     }
 }
 
@@ -37,7 +35,7 @@ public class ValidationProductServiceDecorator(
                       .Where(f => f != null)
                       .ToList();
 
-        if (failures.Any())
+        if (failures.Count != 0)
         {
             throw new ValidationException(failures);
         }
