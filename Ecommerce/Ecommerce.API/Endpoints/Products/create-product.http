@@ -1,0 +1,11 @@
+﻿@Ecommerce.API_HostAddress = https://localhost:7090/api
+POST {{Ecommerce.API_HostAddress}}/product/
+Accept: application/json
+
+{
+  "name": "Giày thể thao",
+  "description": "Giày thể thao thuộc nhãn hàng adidas",
+  "price": 40,
+  "stockQuantity": 1
+}
+###
